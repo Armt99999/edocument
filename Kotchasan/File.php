@@ -62,23 +62,25 @@ class File
      * อ่านรายชื่อไฟล์ภายใต้ไดเร็คทอรี่รวมไดเร็คทอรี่ย่อย.
      *
      * @param string $dir    ไดเร็คทอรี่ มี / ปิดท้ายด้วย
-     * @param string $result
+     * @param array $result คืนค่ารายการไฟล์ที่พบ
      * @param array  $filter (option) ไฟล์ฟิลเตอร์ ตัวพิมพ์เล็ก เช่น array('jpg','gif') แอเรย์ว่างหมายถึงทุกนามสกุล
      */
     public static function listFiles($dir, &$result, $filter = array())
     {
-        $f = @opendir($dir);
-        if ($f) {
-            while (false !== ($text = readdir($f))) {
-                if ($text !== '.' && $text !== '..') {
-                    if (is_dir($dir.$text)) {
-                        self::listFiles($dir.$text.'/', $result, $filter);
-                    } elseif (empty($filter) || in_array(self::ext($text), $filter)) {
-                        $result[] = $dir.$text;
+        if (is_dir($dir)) {
+            $f = opendir($dir);
+            if ($f) {
+                while (false !== ($text = readdir($f))) {
+                    if ($text !== '.' && $text !== '..') {
+                        if (is_dir($dir.$text)) {
+                            self::listFiles($dir.$text.'/', $result, $filter);
+                        } elseif (empty($filter) || in_array(self::ext($text), $filter)) {
+                            $result[] = $dir.$text;
+                        }
                     }
                 }
+                closedir($f);
             }
-            closedir($f);
         }
     }
 
