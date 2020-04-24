@@ -30,6 +30,9 @@ class View extends \Gcms\View
      * @var mixed
      */
     private $sender;
+    /**
+     * @var mixed
+     */
     private $urgencies;
 
     /**
@@ -90,7 +93,7 @@ class View extends \Gcms\View
                     ),
                 ),
                 array(
-                    'class' => 'button green icon-plus',
+                    'class' => 'button pink icon-plus',
                     'href' => $uri->createBackUri(array('module' => 'edocument-write')),
                     'text' => '{LNG_Send Document}',
                 ),

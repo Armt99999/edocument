@@ -634,10 +634,15 @@ class QueryBuilder extends \Kotchasan\Database\Query
                         $this->sqls['set'][$key] = $field.'=('.$value->text().')';
                     } elseif ($value instanceof Sql) {
                         $this->sqls['set'][$key] = $field.'='.$value->text();
-                    } elseif (preg_match('/^([A-Z][0-9]?)\.`?([A-Za-z0-9_]+)`?$/', $value, $match)) {
-                        $this->sqls['set'][$key] = $field.'='.$match[1].'.`'.$match[2].'`';
-                    } elseif (strlen($value) > 2 && $value[0] === '(' && $value[strlen($value) - 1] === ')') {
-                        $this->sqls['set'][$key] = $field.'='.$value;
+                    } elseif (is_string($value)) {
+                        if (preg_match('/^([A-Z][0-9]?)\.`?([A-Za-z0-9_]+)`?$/', $value, $match)) {
+                            $this->sqls['set'][$key] = $field.'='.$match[1].'.`'.$match[2].'`';
+                        } elseif (mb_strlen($value) > 2 && $value[0] === '(' && $value[mb_strlen($value) - 1] === ')') {
+                            $this->sqls['set'][$key] = $field.'='.$value;
+                        } else {
+                            $this->sqls['set'][$key] = $field.'='.$key;
+                            $this->sqls['values'][$key] = $value;
+                        }
                     } else {
                         $this->sqls['set'][$key] = $field.'='.$key;
                         $this->sqls['values'][$key] = $value;
