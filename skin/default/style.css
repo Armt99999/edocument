@@ -94,8 +94,9 @@ a:hover {
   height: 0;
   font-size: 1em;
 }
-.mainpage .language-menu ul {
-  font-size: 1.625em;
+.language-menu::before {
+  content: attr(data-text);
+  text-transform: uppercase;
 }
 .language-menu:hover ul {
   height: auto;

@@ -564,6 +564,7 @@ input[type="color"] {
   -o-transition: border-color linear 0.2s, width linear 0.2s;
   transition: border-color linear 0.2s, width linear 0.2s;
 }
+ul.inputgroups.g-input,
 .radiogroups.g-input,
 .checkboxgroups.g-input,
 .input-gcalendar,
